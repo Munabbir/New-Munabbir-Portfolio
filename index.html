@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Shakib's frontend development portfolio">
+  <title>Munabbir Shakib | Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./Css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+  <header class="sticky top-0 z-20 border-b border-white/10 bg-[#080b14]/90 backdrop-blur-xl">
+    <div class="navbar shadow-sm">
+  <div class="navbar-start">
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+        <svg aria-label="Menu" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+      </div>
+      <ul
+        tabindex="-1"
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+      <li class="hover:text-[#8bffb0]"><a href="#about">About</a></li>
+      <li class="hover:text-[#8bffb0]"><a href="#projects">projects</a></li>
+      <li class="hover:text-[#8bffb0]"><a href="#contact">contact</a></li>
+      <li class="hover:text-[#8bffb0]"><a href="admin.html">Admin</a></li>
+      </ul>
+    </div>
+    <a href="#" class="font-extrabold tracking-wide">SHAKIB<span class="neon">.DEV</span></a>
+  </div>
+  <div class="navbar-center hidden lg:flex">
+    <ul class="menu menu-horizontal px-1">
+      <li class="hover:text-[#8bffb0]"><a href="#about">About</a></li>
+      <li class="hover:text-[#8bffb0]"><a href="#projects">projects</a></li>
+      <li class="hover:text-[#8bffb0]"><a href="#contact">contact</a></li>
+      <li class="hover:text-[#8bffb0]" ><a  class="btn btn-outline !px-4 !py-2 hover:text-[#8bffb0]" href="admin.html">Admin</a></li>
+    </ul>
+  </div>
+  <div class="w-12 rounded-full m-auto mr-5 border-2 border-[#8bffb0]">
+    <a href="#"><img src="./img/Blue Modern Facebook Profile Picture.png" alt="Shakib's Profile Photo"></a>
+  </div>
+</div>
+
+</header>
+  <main class="mx-auto max-w-6xl px-5">
+    <section class="grid min-h-[78vh] items-center gap-10 py-16 md:grid-cols-[1.3fr_.7fr]">
+      <div>
+        <p class="mb-4 text-sm font-semibold uppercase tracking-[.25em] text-slate-400">Hello, I'm Munabbir Shakib</p>
+        <h1 class="text-4xl font-extrabold leading-tight sm:text-6xl">I build digital<br><span class="neon">experiences.</span></h1>
+        <p class="mt-6 max-w-xl leading-8 text-slate-400">I create clean, responsive websites and thoughtful interfaces that turn ideas into useful digital experiences.</p>
+        <p class="mt-4 font-semibold neon"><span id="typing">Frontend Developer</span><span class="typing-cursor"></span>
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3"><a class="btn btn-primary" href="#projects">Explore my work <i class="fa-solid fa-arrow-right"></i></a><a class="btn btn-outline" href="#contact">Let's talk</a></div>
+      </div>
+     <div class="hover-3d">
+  <!-- content -->
+  <figure class="max-w-100 rounded-2xl">
+    <img src="./img/Blue Modern Facebook Profile Picture.png" alt="3D card" />
+  </figure>
+  <!-- 8 empty divs needed for the 3D effect -->
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
+      <div class="glass rounded-3xl p-8 shadow-2xl">
+        <div class="mb-5 grid h-16 w-16 place-items-center rounded-2xl bg-emerald-300/10 text-3xl neon"><i class="fa-solid fa-code"></i>
+        </div>
+        <h2 class="text-xl font-bold">Design-minded developer</h2>
+        <p class="mt-3 leading-7 text-slate-400">Responsive interfaces, thoughtful details, and clean frontend code.</p>
+        <div class="mt-6 flex flex-wrap gap-2 text-xs">
+          <span class="rounded-full  border-2 border-[#8bffb0] hover:border-[#ff958b] transition-all px-3 py-2">HTML</span>
+          <span class="rounded-full border-2 border-[#8bffb0] hover:border-[#ff958b] px-3 py-2">Tailwind CSS</span>
+          <span class="rounded-full border-2 border-[#8bffb0] hover:border-[#ff958b] px-3 py-2">JavaScript</span></div>
+      </div>
+    </section>
+    
+    <section id="about" class="py-14"><p class="text-sm uppercase tracking-[.2em] neon">A little about me</p><h2 class="mt-3 text-3xl font-bold">Building for the web</h2><p class="mt-4 max-w-3xl leading-8 text-slate-400">I'm a frontend developer who enjoys turning ideas into responsive, user-friendly websites. I'm always learning and improving through real projects.</p>
+    </section>
+    <section id="projects" class="py-14">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="text-sm uppercase tracking-[.2em] neon">Selected work</p><h2 class="mt-3 text-3xl font-bold">My Projects</h2>
+        </div>
+        <a href="admin.html" class="text-sm text-slate-400 hover:text-[#8bffb0]">Manage projects <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+      </div>
+      <div id="projectGrid" class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="glass rounded-2xl p-6 text-slate-400">Loading projects…</div>
+      </div>
+      <p id="projectNote" class="mt-4 text-sm text-slate-500"></p>
+    </section>
+  <section id="contact" class="my-14 rounded-3xl border border-emerald-300/20 bg-emerald-300/5 p-8 sm:p-12">
+      <div>
+        <p class="text-sm uppercase tracking-[.2em] neon">Contact</p>
+      <h2 class="mt-3 text-3xl font-bold">Have a project in mind?</h2>
+      <p class="mt-3 text-slate-400">Replace this email with your real contact address.</p>
+      <a id="emailLink" class="btn btn-primary mt-6 sm:py-6" href="mailto:munabbirshakib355@gmail.com"><i class="fa-solid fa-envelope"></i> munabbirshakib355@gmail.com</a>
+      </div>
+    </section>
+    <footer class="border-t border-white/10 py-8 text-center text-sm text-slate-500">© <span id="year"></span> Shakib. Built with care.</footer>
+  </main>
+  <script src="config.js"></script>
+  <script src="./Js/app.js"></script>
+</body>
+</html>

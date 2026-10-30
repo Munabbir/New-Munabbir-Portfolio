@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio Admin | Shakib</title><script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>body{font-family:Poppins,system-ui,sans-serif;background:#080b14;color:#f8fafc}.glass{background:#111827;border:1px solid rgba(255,255,255,.09)}.field{width:100%;background:#080b14;border:1px solid #344054;border-radius:12px;padding:12px 14px;color:#fff;outline:none}.field:focus{border-color:#8bffb0}.btn{border-radius:999px;padding:11px 17px;font-weight:600}.primary{background:#8bffb0;color:#080b14}.outline{border:1px solid #344054}.neon{color:#8bffb0}label{display:block;margin-bottom:7px;font-size:13px;color:#cbd5e1}</style>
+</head>
+<body>
+  <main class="mx-auto max-w-5xl px-5 py-8 sm:py-12">
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <div>
+      <a href="index.html" class="text-sm text-slate-400 hover:text-white">← View portfolio</a>
+      <h1 class="mt-3 text-3xl font-extrabold">Project <span class="neon">Admin</span></h1>
+      <p class="mt-2 text-sm text-slate-400">Sign in to add, edit, publish, or remove projects.</p>
+    </div>
+    <button id="signOut" class="btn outline hidden">Sign out</button>
+  </div>
+  <div id="notice" class="mt-6 hidden rounded-xl border border-white/10 p-4 text-sm" role="status">
+
+  </div>
+  <section id="setupWarning" class="glass mt-7 rounded-2xl p-6">
+    <h2 class="text-lg font-bold">One-time setup needed</h2>
+    <p class="mt-2 text-sm leading-6 text-slate-400">To make this dashboard work online, connect a free Supabase project and follow the steps in README.txt. Then update <code class="neon">config.js</code>. This page cannot save projects until that is done.</p>
+  </section>
+  <section id="authPanel" class="glass mt-7 hidden max-w-xl rounded-2xl p-6 sm:p-8">
+    <h2 class="text-xl font-bold">Admin sign in</h2>
+    <p class="mt-2 text-sm text-slate-400">Use the admin email and password you created in Supabase.</p>
+    <form id="loginForm" class="mt-6 space-y-4">
+      <div>
+        <label for="email">Email</label>
+        <input id="email" class="field" type="email" autocomplete="username" required>
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input id="password" class="field" type="password" autocomplete="current-password" required>
+      </div>
+      <button class="btn primary w-full" type="submit">Sign in securely</button>
+    </form>
+  </section>
+  <section id="manager" class="mt-7 hidden grid gap-6 lg:grid-cols-[.9fr_1.1fr]">
+    <div class="glass h-fit rounded-2xl p-6">
+      <h2 id="formTitle" class="text-xl font-bold">Add a project</h2>
+      <form id="projectForm" class="mt-5 space-y-4">
+        <input type="hidden" id="projectId">
+        <div>
+          <label for="title">Project title *</label>
+          <input id="title" class="field" required maxlength="100" placeholder="e.g. Personal Portfolio">
+        </div>
+        <div>
+          <label for="description">Description *</label>
+          <textarea id="description" class="field min-h-28" required maxlength="600" placeholder="What does this project do?"></textarea>
+        </div>
+        <div>
+          <label for="image">Project image (optional)</label>
+          <input id="image" class="field" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+          <p class="mt-1 text-xs text-slate-500">JPG, PNG, WebP or GIF; maximum 4 MB.</p>
+          <img id="imagePreview" class="mt-3 hidden max-h-40 rounded-xl object-cover" alt="Selected image preview">
+        </div>
+      <div>
+        <label for="liveUrl">Live demo URL</label><input id="liveUrl" class="field" type="url" placeholder="https://..."></div>
+      <div>
+        <label for="githubUrl">GitHub URL</label><input id="githubUrl" class="field" type="url" placeholder="https://github.com/...">
+      </div>
+      <label class="flex items-center gap-3 !mb-0"><input id="published" type="checkbox" checked class="accent-emerald-300"> <span>Publish on public portfolio</span>
+      </label>
+      <div class="flex flex-wrap gap-3 pt-2">
+        <button id="saveButton" class="btn primary" type="submit">Save project</button>
+        <button id="cancelEdit" class="btn outline hidden" type="button">Cancel edit</button>
+      </div>
+    </form>
+  </div>
+    <div class="glass rounded-2xl p-6">
+      <div class="flex items-center justify-between gap-3"><h2 class="text-xl font-bold">Your projects</h2>
+        <button id="refresh" class="text-sm neon"><i class="fa-solid fa-rotate"></i> Refresh</button>
+      </div>
+      <div id="projectList" class="mt-5 space-y-3">
+        <p class="text-sm text-slate-400">Sign in to load projects.</p>
+      </div>
+    </div>
+  </section>
+  <p class="mt-10 text-xs leading-6 text-slate-500">Security note: only the configured admin email should have permission to manage projects. Never put a Supabase service-role key in this website.</p>
+</main>
+<script src="config.js">
+
+</script>
+<script src="./Js/admin.js"></script>
+<!-- <script>
+const $=id=>document.getElementById(id);
+let client=null,session=null,currentImageUrl=null;
+function notice(msg,bad=false){$('notice').textContent=msg;$('notice').classList.remove('hidden');$('notice').className='mt-6 rounded-xl border p-4 text-sm '+(bad?'border-red-400/30 bg-red-400/10 text-red-200':'border-emerald-300/20 bg-emerald-300/10 text-emerald-100')}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function resetForm(){$('projectForm').reset();$('projectId').value='';$('published').checked=true;$('formTitle').textContent='Add a project';$('saveButton').textContent='Save project';$('cancelEdit').classList.add('hidden');$('imagePreview').classList.add('hidden');$('imagePreview').src='';currentImageUrl=null}
+function showSignedIn(){ $('setupWarning').classList.add('hidden');$('authPanel').classList.add('hidden');$('manager').classList.remove('hidden');$('signOut').classList.remove('hidden');loadProjects()}
+async function init(){
+ const cfg=window.PORTFOLIO_CONFIG||{};
+ if(!cfg.supabaseUrl||!cfg.supabaseAnonKey){$('authPanel').classList.add('hidden');$('setupWarning').classList.remove('hidden');
+ return}
+ $('setupWarning').classList.add('hidden');client=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey);$('authPanel').classList.remove('hidden');
+ const {data:{session:s}}=await client.auth.getSession();session=s;
+ if(session)showSignedIn();
+ client.auth.onAuthStateChange((_event,s)=>{session=s;if(s)showSignedIn();
+  else{$('manager').classList.add('hidden');$('signOut').classList.add('hidden');$('authPanel').classList.remove('hidden')}});
+}
+$('loginForm').addEventListener('submit',async e=>{e.preventDefault();
+  const {error}=await client.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)notice(error.message,true);else notice('Signed in successfully.')});
+$('signOut').addEventListener('click',async()=>{await client.auth.signOut();notice('You are signed out.')});
+$('refresh').addEventListener('click',loadProjects);
+$('cancelEdit').addEventListener('click',resetForm);
+$('image').addEventListener('change',()=>{const f=$('image').files[0];if(!f){$('imagePreview').classList.add('hidden');return}if(f.size>4*1024*1024){notice('Image must be 4 MB or smaller.',true);$('image').value='';return}const url=URL.createObjectURL(f);$('imagePreview').src=url;$('imagePreview').classList.remove('hidden')});
+async function loadProjects(){if(!client||!session)return;
+  const box=$('projectList');box.innerHTML='<p class="text-sm text-slate-400">Loading…</p>';
+  const {data,error}=await client.from('projects').select('*').order('created_at',{ascending:false});
+  if(error){box.innerHTML='';notice(error.message,true);return}if(!data.length){box.innerHTML='<p class="text-sm text-slate-400">No projects yet. Add your first project using the form.</p>';return}
+ box.innerHTML=data.map(p=>`<article class="rounded-xl border border-white/10 p-4"><div class="flex gap-3">${p.image_url?`<img src="${esc(p.image_url)}" class="h-16 w-20 rounded-lg object-cover" alt="">`:`<div class="grid h-16 w-20 place-items-center rounded-lg bg-slate-800 neon"><i class="fa-solid fa-code"></i></div>`}<div class="min-w-0 flex-1"><h3 class="font-semibold">${esc(p.title)}</h3><p class="mt-1 text-xs text-slate-400">${p.published?'Published':'Draft'} · ${esc((p.description||'').slice(0,100))}</p></div></div><div class="mt-4 flex gap-4 text-sm"><button class="neon" data-edit="${p.id}">Edit</button><button class="text-red-300" data-delete="${p.id}">Delete</button></div></article>`).join('');
+ box.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editProject(data.find(p=>p.id===b.dataset.edit)));
+ box.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>deleteProject(b.dataset.delete));
+}
+function editProject(p){$('projectId').value=p.id;$('title').value=p.title;$('description').value=p.description;$('liveUrl').value=p.live_url||'';$('githubUrl').value=p.github_url||'';$('published').checked=!!p.published;currentImageUrl=p.image_url||null;if(currentImageUrl){$('imagePreview').src=currentImageUrl;$('imagePreview').classList.remove('hidden')}else $('imagePreview').classList.add('hidden');$('formTitle').textContent='Edit project';$('saveButton').textContent='Update project';$('cancelEdit').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
+async function uploadImage(file){if(!file)return currentImageUrl;if(file.size>4*1024*1024)throw new Error('Image must be 4 MB or smaller.');if(!['image/jpeg','image/png','image/webp','image/gif'].includes(file.type))throw new Error('Please choose a JPG, PNG, WebP or GIF image.');const ext=file.name.split('.').pop().toLowerCase();const name=`${session.user.id}/${crypto.randomUUID()}.${ext}`;const {error}=await client.storage.from('project-images').upload(name,file,{upsert:false,contentType:file.type});if(error)throw error;return client.storage.from('project-images').getPublicUrl(name).data.publicUrl}
+$('projectForm').addEventListener('submit',async e=>{e.preventDefault();if(!session){notice('Please sign in first.',true);return}const file=$('image').files[0];$('saveButton').disabled=true;$('saveButton').textContent='Saving…';try{const image_url=await uploadImage(file);const payload={title:$('title').value.trim(),description:$('description').value.trim(),image_url,live_url:$('liveUrl').value.trim()||null,github_url:$('githubUrl').value.trim()||null,published:$('published').checked,updated_at:new Date().toISOString()};const id=$('projectId').value;const result=id?await client.from('projects').update(payload).eq('id',id):await client.from('projects').insert(payload);if(result.error)throw result.error;notice(id?'Project updated.':'Project added.');resetForm();await loadProjects()}catch(err){notice(err.message||'Could not save project.',true)}finally{$('saveButton').disabled=false;$('saveButton').textContent=$('projectId').value?'Update project':'Save project'}});
+async function deleteProject(id){if(!confirm('Delete this project permanently?'))return;
+const {error}=await client.from('projects').delete().eq('id',id);if(error)notice(error.message,true);else{notice('Project deleted.');loadProjects()}}
+init();
+</script> -->
+</body>
+</html>
